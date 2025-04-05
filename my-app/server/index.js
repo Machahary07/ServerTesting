@@ -12,10 +12,18 @@ app.use(express.json());
 
 // Connect to MongoDB
 mongoose.connect(process.env.ATLAS_URI)
-.then(() => console.log('✅ MongoDB connected'))
-.catch((err) => console.error('❌ MongoDB connection error:', err));
+  .then(() => console.log('✅ MongoDB connected'))
+  .catch((err) => console.error('❌ MongoDB connection error:', err));
 
-// Routes (for testing)
+// Import routes
+const taskRoutes = require('./routes/taskRoutes');
+const userRoutes = require('./routes/userRoutes');
+
+// Mount routes
+app.use('/api/tasks', taskRoutes);
+app.use('/api/users', userRoutes);
+
+// Test route
 app.get('/', (req, res) => {
   res.send('Backend is working!');
 });
